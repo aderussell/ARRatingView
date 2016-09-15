@@ -24,11 +24,12 @@
 
 @implementation ARRatingView
 {
-    CGPathRef _starPath;
+    UIColor   *_ratingBackgroundColor;
+    UIColor   *_ratingForegroundColor;
 }
 
 
-#pragma mark - Setters
+#pragma mark - Setters & Getters
 
 - (void)setRating:(CGFloat)rating
 {
@@ -39,24 +40,49 @@
     }
 }
 
+- (UIBezierPath *)starPath
+{
+    if (!_starPath) {
+        _starPath = [UIBezierPath bezierPathWithCGPath:[[self class] createDefaultStarPath]];
+    }
+    return _starPath;
+}
+
 
 - (void)setRatingBackgroundColor:(UIColor * __nullable)ratingBackgroundColor
 {
     _ratingBackgroundColor = ratingBackgroundColor;
-    if (ratingBackgroundColor == nil) {
-        _ratingBackgroundColor = [UIColor lightGrayColor];
-    }
+    
     [self setNeedsDisplay];
 }
 
 - (void)setRatingForegroundColor:(UIColor * __nullable)ratingForegroundColor
 {
     _ratingForegroundColor = ratingForegroundColor;
-    if (ratingForegroundColor == nil) {
-        _ratingForegroundColor = [UIColor orangeColor];
-    }
+    
     [self setNeedsDisplay];
 }
+
+
+- (UIColor *)ratingForegroundColor
+{
+    if (!_ratingForegroundColor) {
+        _ratingForegroundColor = [UIColor colorWithRed:251.0/255.0 green:198.0/255.0 blue:41.0/255.0 alpha:1.0];
+    }
+    
+    return _ratingForegroundColor;
+}
+
+- (UIColor *)ratingBackgroundColor
+{
+    if (!_ratingBackgroundColor) {
+        _ratingBackgroundColor = [UIColor lightGrayColor];
+    }
+    
+    return _ratingBackgroundColor;
+}
+
+
 
 
 
@@ -69,7 +95,8 @@
     
     CGFloat starHeight = rect.size.height;
     
-    _starPath = [self createStarPathWithHeight:starHeight];
+    CGPathRef originalStartPath = CGPathCreateCopy(self.starPath.CGPath);
+    CGPathRef starPath = [self createStarPathFromPath:originalStartPath WithHeight:starHeight];
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
@@ -79,7 +106,7 @@
         
         CGAffineTransform translation = CGAffineTransformMakeTranslation(0 + (i * starHeight * 1.2), 0);
         
-        CGPathRef path = CGPathCreateMutableCopyByTransformingPath(_starPath, &translation);
+        CGPathRef path = CGPathCreateMutableCopyByTransformingPath(starPath, &translation);
         
         CGContextAddPath(ctx, path);
         CGContextClip(ctx);
@@ -111,13 +138,16 @@
         CGPathRelease(path);
     }
     
-    CGPathRelease(_starPath);
-    _starPath = nil;
+    CGPathRelease(starPath);
+    starPath = nil;
 }
 
 - (CGSize)intrinsicContentSize
 {
-    return CGSizeMake(128, 22);
+    CGFloat height = 20;
+    CGFloat width  = (height * 1.2 * 4) + height;
+    
+    return CGSizeMake(width, height);
 }
 
 - (CGSize)sizeThatFits:(CGSize)size
@@ -126,7 +156,7 @@
 }
 
 
-- (CGPathRef)createStarPath
++ (CGPathRef)createDefaultStarPath
 {
     CGMutablePathRef path = CGPathCreateMutable();
     
@@ -146,10 +176,8 @@
     return path;
 }
 
-- (CGPathRef)createStarPathWithHeight:(CGFloat)height
+- (CGPathRef)createStarPathFromPath:(CGPathRef)path WithHeight:(CGFloat)height
 {
-    CGPathRef path = [self createStarPath];
-    
     CGAffineTransform transform = CGAffineTransformMakeScale(height, height);
     
     CGPathRef resizedPath = CGPathCreateCopyByTransformingPath(path, &transform);
@@ -158,7 +186,6 @@
     
     return resizedPath;
 }
-
 
 
 - (void)prepareForInterfaceBuilder

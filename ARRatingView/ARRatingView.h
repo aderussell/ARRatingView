@@ -30,6 +30,13 @@ NS_ASSUME_NONNULL_BEGIN
 IB_DESIGNABLE
 @interface ARRatingView : UIControl
 
+
+
++ (CGPathRef)createDefaultStarPath;
+
+@property (nonatomic, strong, null_resettable) UIBezierPath *starPath UI_APPEARANCE_SELECTOR;
+
+
 /**
  *  The current rating shown in the rating view.
  *  This value will be clamped between 0 and 5.
