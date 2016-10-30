@@ -23,8 +23,5 @@ s.platform     = :ios, '7.0'
 s.requires_arc = true
 
 s.source_files = 'ARRatingView/*'
-s.resource_bundles = {
-'ARCGPathFromString' => ['Pod/Assets/*.png']
-}
 s.frameworks = 'UIKit'
 end
