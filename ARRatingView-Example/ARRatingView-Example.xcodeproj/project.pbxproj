@@ -221,6 +221,7 @@
 				TargetAttributes = {
 					ABC25AD31D8B182A00371C6C = {
 						CreatedOnToolsVersion = 8.0;
+						DevelopmentTeam = 4E9Z3Z82BG;
 						ProvisioningStyle = Automatic;
 					};
 					ABC25AEC1D8B182A00371C6C = {
@@ -439,6 +440,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4E9Z3Z82BG;
 				INFOPLIST_FILE = "ARRatingView-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.adrianrussell.ARRatingView-Example";
@@ -450,6 +452,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = 4E9Z3Z82BG;
 				INFOPLIST_FILE = "ARRatingView-Example/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "uk.co.adrianrussell.ARRatingView-Example";
@@ -522,6 +525,7 @@
 				ABC25B031D8B182A00371C6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ABC25B041D8B182A00371C6C /* Build configuration list for PBXNativeTarget "ARRatingView-ExampleTests" */ = {
 			isa = XCConfigurationList;
@@ -530,6 +534,7 @@
 				ABC25B061D8B182A00371C6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		ABC25B071D8B182A00371C6C /* Build configuration list for PBXNativeTarget "ARRatingView-ExampleUITests" */ = {
 			isa = XCConfigurationList;
@@ -538,6 +543,7 @@
 				ABC25B091D8B182A00371C6C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
