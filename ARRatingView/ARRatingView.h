@@ -25,27 +25,45 @@
 NS_ASSUME_NONNULL_BEGIN
 
 /**
- *  An interactive control that allows for star based ratings to be selected with a rating between 0 and 5.
+ *  An interactive control that allows for star based ratings to be selected.
  */
 IB_DESIGNABLE
 @interface ARRatingView : UIControl
 
 
 
+/**
+ <#Description#>
+
+ @return <#return value description#>
+ */
 + (CGPathRef)createDefaultStarPath;
 
+
+/**
+ *  The bezier path to use for the shape of the stars in the control.
+ *  The default value for this is the path returned by the `createDefaultStarPath` class method.
+ */
 @property (nonatomic, strong, null_resettable) UIBezierPath *starPath UI_APPEARANCE_SELECTOR;
 
 
 /**
  *  The current rating shown in the rating view.
- *  This value will be clamped between 0 and 5.
+ *  This value will be clamped between 0 and the receivers `starCount`.
  */
 @property (nonatomic) CGFloat rating;
 
 /**
+ *  The number of stars to be shown on the control.
+ *  The minimum number of stars is 1 and values below this will be clamped up to 1.
+ *  The default is 5.
+ */
+@property (nonatomic) IBInspectable NSUInteger starCount;
+
+/**
  *  The color that the background of the stars will be colored.
  *  This will be visible if the foreground coloring isn't over the top.
+ *  The default is UIColors defined `lightGreyColor`.
  */
 @property (nonatomic, strong, null_resettable) IBInspectable UIColor *ratingBackgroundColor;
 

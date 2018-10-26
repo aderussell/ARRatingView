@@ -24,12 +24,27 @@
 
 @implementation ARRatingView
 {
+    NSUInteger _starCount;
     UIColor   *_ratingBackgroundColor;
     UIColor   *_ratingForegroundColor;
 }
 
 
 #pragma mark - Setters & Getters
+
+- (NSUInteger)starCount
+{
+    if (!_starCount) {
+        _starCount = 5;
+    }
+    return _starCount;
+}
+
+- (void)setStarCount:(NSUInteger)starCount
+{
+    _starCount = MAX(1, starCount);
+    [self setNeedsDisplay];
+}
 
 - (void)setRating:(CGFloat)rating
 {
@@ -90,6 +105,21 @@
 
 - (void)drawRect:(CGRect)rect
 {
+//    UIViewContentModeScaleToFill,
+//    UIViewContentModeScaleAspectFit,      // contents scaled to fit with fixed aspect. remainder is transparent
+//    UIViewContentModeScaleAspectFill,     // contents scaled to fill with fixed aspect. some portion of content may be clipped.
+//    UIViewContentModeRedraw,              // redraw on bounds change (calls -setNeedsDisplay)
+//    UIViewContentModeCenter,              // contents remain same size. positioned adjusted.
+//    UIViewContentModeTop,
+//    UIViewContentModeBottom,
+//    UIViewContentModeLeft,
+//    UIViewContentModeRight,
+//    UIViewContentModeTopLeft,
+//    UIViewContentModeTopRight,
+//    UIViewContentModeBottomLeft,
+//    UIViewContentModeBottomRight,
+    
+    
     UIColor *backgroundColor = self.ratingBackgroundColor;
     UIColor *foregoundColor  = self.ratingForegroundColor;
     
@@ -100,7 +130,7 @@
     
     CGContextRef ctx = UIGraphicsGetCurrentContext();
     
-    for (NSUInteger i = 0; i < 5; i++) {
+    for (NSUInteger i = 0; i < self.starCount; i++) {
         
         CGContextSaveGState(ctx);
         
@@ -145,7 +175,7 @@
 - (CGSize)intrinsicContentSize
 {
     CGFloat height = 20;
-    CGFloat width  = (height * 1.2 * 4) + height;
+    CGFloat width  = (height * 1.2 * (self.starCount - 1)) + height;
     
     return CGSizeMake(width, height);
 }
@@ -206,13 +236,14 @@
     
     CGPoint position = [touch locationInView:self];
     
-    NSUInteger starPosition = floor((position.x / self.bounds.size.width) * 5);
+    NSUInteger starPosition = floor((position.x / self.bounds.size.width) * self.starCount);
     
     starPosition +=1;
     
-    starPosition = MAX(0, MIN(starPosition, 5));
+    starPosition = MAX(0, MIN(starPosition, self.starCount));
     
-    self.rating = starPosition;
+    _rating = starPosition;
+    [self setNeedsDisplay];
 }
 
 - (void)touchesMoved:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
@@ -221,13 +252,14 @@
     
     CGPoint position = [touch locationInView:self];
     
-    NSUInteger starPosition = floor((position.x / self.bounds.size.width) * 5);
+    NSUInteger starPosition = floor((position.x / self.bounds.size.width) * self.starCount);
     
     starPosition += 1;
     
-    starPosition = MAX(0, MIN(starPosition, 5));
+    starPosition = MAX(0, MIN(starPosition, self.starCount));
     
-    self.rating = starPosition;
+    _rating = starPosition;
+    [self setNeedsDisplay];
 }
 
 @end
