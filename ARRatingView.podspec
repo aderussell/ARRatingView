@@ -8,7 +8,7 @@
 
 Pod::Spec.new do |s|
 s.name             = "ARRatingView"
-s.version          = "1.0.0"
+s.version          = "1.1.0"
 s.summary          = "A rating control for iOS."
 s.description      = "This CocoaPod provides an interactive control for giving a star based rating."
 
