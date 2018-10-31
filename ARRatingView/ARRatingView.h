@@ -33,9 +33,10 @@ IB_DESIGNABLE
 
 
 /**
- <#Description#>
-
- @return <#return value description#>
+ *  Returns the bezier path that is used for the default star shape.
+ *  This is the path that will be used to draw star shapes if the `starPath` property on an instance has not bee manually set.
+ *
+ *  @return The path for the default star shape.
  */
 + (CGPathRef)createDefaultStarPath;
 
